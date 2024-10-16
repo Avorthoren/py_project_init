@@ -7,7 +7,6 @@
 # NOTE: might need fixes depending on how you installed pyenv.
 #       Check 'Update available versions' section for details.
 # Latest basic stable python will be used by default.
-
 # Examples (given script added as newproject alias):
 # newproject project1
 # newproject project2 3.7.6
@@ -59,7 +58,7 @@ fi
 
 CREATE_VENV=(pyenv virtualenv "$PY_VERSION" "$1.$PY_VERSION")
 # Try to create venv.
-echo "${CREATE_VENV[@]}"
+echo "> ${CREATE_VENV[@]}"
 CREATE_RESULT=$("${CREATE_VENV[@]}" 2>&1)
 echo "$CREATE_RESULT"
 
@@ -69,9 +68,9 @@ NOT_INSTALLED=$(echo "$CREATE_RESULT" | grep -o "$NOT_INSTALLED_SUFFIX")
 if [[ "$NOT_INSTALLED" == "$NOT_INSTALLED_SUFFIX" ]]; then
 	# Specified python version is not installed. Install it.
 	INSTALL=(pyenv install "$PY_VERSION")
-	echo "${INSTALL[@]}"
+	echo "> ${INSTALL[@]}"
 	"${INSTALL[@]}" || exit 1
-	echo "${CREATE_VENV[@]}"
+	echo "> ${CREATE_VENV[@]}"
 	"${CREATE_VENV[@]}" || exit 1
 elif [[ "$CREATE_RESULT" != '' && "$NOT_INSTALLED" == '' ]]; then
 	# Another error, because on success $CREATE_RESULT will be empty.
